@@ -2,6 +2,7 @@ require(dplyr)
 require(igraph)
 require(zoo)
 
+# This function obtains a co-mentions network
 co_mentions <- function(mentions){
     mentions <- mentions[,c('author', 'mentioned', 'tweet_id')]
     mentions <- dplyr::inner_join(x=mentions, y=mentions,  by='author')
@@ -23,7 +24,7 @@ co_mentions <- function(mentions){
     return(mentions)
 }
 
-# This function return the main component of a network
+# This function returns the main component of a network
 giant.component <- function(graph){
   # divide into clusters
   cl <- clusters(graph)
@@ -85,7 +86,7 @@ top_network_nodes <- function(edges, percen=0.05, main_component=FALSE){
   return(list(summary=data_summary, top_accounts=tops, network=g))
 }
 
-# This function creates missing dates and calculate frequencies
+# This function creates missing dates and calculates frequencies
 full_freq_dates <- function(tweets){
     # calculate tweets frequencies
     freq_tweets <- as.data.frame(table(as.Date(tweets, format='%d-%m-%Y')), stringsAsFactors = FALSE)
@@ -104,6 +105,7 @@ full_freq_dates <- function(tweets){
     return(freq_tweets)
 }
 
+# This function calculates the annual and monthly frequencies
 mon_ann_freq <- function(freq_tweets, by='month'){
     # this function considers that this is the order
     names(freq_tweets) <- c('Dates', 'Freq')
@@ -122,7 +124,7 @@ mon_ann_freq <- function(freq_tweets, by='month'){
     return(freq_tweets)
 }
 
-# this function calculates basic statistics
+# This function calculates basic statistics about frequencies
 basic_stats <- function(frequencies){
     cat('Average', round(mean(frequencies), 2), '\n')
     cat('SD', round(sd(frequencies), 2), '\n')
@@ -131,7 +133,7 @@ basic_stats <- function(frequencies){
 }
 
 
-# network top accounts stats
+# Network top accounts stats
 top_accounts_net_stats <- function(network, top_accounts){
     sapply(sort(unique(top_accounts$field)), function(x){
         cat(x, '\n')
@@ -145,9 +147,8 @@ top_accounts_net_stats <- function(network, top_accounts){
     cat('Eigen',round(100*sum(V(network)$eigen[which(V(network)$name %in% top_accounts$account)])/sum(V(network)$eigen), 2), '\n')
 }
 
-# accounts by tweets
+# This function return a data.frame with all accounts and the number of tweets
 top_tweet <- function(tweets){
-    # this function return a data.frame with all accounts and the number of tweets
     tops <- as.data.frame(table(tweets), stringsAsFactors = FALSE)
     names(tops) <- c('Account', 'Tweets')
     tops <- tops[order(tops$Tweets, decreasing = TRUE),]
@@ -155,9 +156,8 @@ top_tweet <- function(tweets){
     return(tops)
 }
 
-# accounts by mentions
+# This function return a data.frame with all accounts and the number of mentions received
 top_mentioned <- function(tweets){
-    # this function return a data.frame with all accounts and the number of mentions received
     tops <- as.data.frame(table(tweets), stringsAsFactors = FALSE)
     names(tops) <- c('Account', 'Mentions')
     tops <- tops[order(tops$Mentions, decreasing = TRUE),]
@@ -165,9 +165,8 @@ top_mentioned <- function(tweets){
     return(tops)
 }
 
-# top accounts tweets by year
+# This function calculates the number of annual tweets by account and type
 top_accounts_stats <- function(tweets, top_accounts){
-    # this function calculates the number of annual tweets by account and type
     tweets_year <- tweets
     tweets_year$date <- format(as.Date(tweets_year$date, format='%d-%m-%Y'), '%Y')
     tweets_year <- dplyr::inner_join(tweets_year, top_accounts, by=c('author'='account'))
@@ -182,9 +181,8 @@ top_accounts_stats <- function(tweets, top_accounts){
     return(result)
 }
 
-# top accounts tweets average by year
+# This function calculates the average of annual tweets by account and type
 top_accounts_net_average <- function(tweets, top_accounts){
-    # this function calculates the average of annual tweets by account and type
     tweets_year <- tweets
     tweets_year$date <- format(as.Date(tweets_year$date, format='%d-%m-%Y'), '%Y')
     tweets_year <- dplyr::inner_join(tweets_year, top_accounts, by=c('author'='account'))
@@ -201,9 +199,8 @@ top_accounts_net_average <- function(tweets, top_accounts){
     return(result)
 }
 
-# new top accounts tweets by year
+# This function calculates the number of new accounts by year and type
 top_accounts_net_accounts <- function(tweets, top_accounts){
-    # this function calculates the number of new accounts by year and type
     tweets_year <- tweets
     tweets_year$date <- format(as.Date(tweets_year$date, format='%d-%m-%Y'), '%Y')
     tweets_year <- dplyr::inner_join(tweets_year, top_accounts, by=c('author'='account'))
@@ -220,9 +217,8 @@ top_accounts_net_accounts <- function(tweets, top_accounts){
     return(result)
 }
 
-# new unique top accounts tweets by year
+# This function calculates the number of new unique accounts by year and type
 top_accounts_net_uni_accounts <- function(tweets, top_accounts){
-    # this function calculates the number of new unique accounts by year and type
     tweets_year <- tweets
     tweets_year$date <- format(as.Date(tweets_year$date, format='%d-%m-%Y'), '%Y')
     tweets_year <- dplyr::inner_join(tweets_year, top_accounts, by=c('author'='account'))
@@ -239,7 +235,7 @@ top_accounts_net_uni_accounts <- function(tweets, top_accounts){
     return(result)
 }
 
-
+# This function calculates basic statistics about periods
 period_stats <- function(tweets, mentions){
     cat('Active actors:',length(unique(tweets$author)),'\n')
     cat('Active mentions:',length(unique(mentions$author)),'\n')
@@ -248,6 +244,7 @@ period_stats <- function(tweets, mentions){
     cat('Total actors:',length(unique(c(tweets$author, mentions$mentioned))),'\n')
 }
 
+# This function calculates basic statistics (cumulative) about periods
 period_stats_cumulative <- function(tweets, mentions){
     cat('Active actors:',length(unique(tweets$author)),'\n')
     cat('Active mentions:',length(unique(mentions$author)),'\n')
