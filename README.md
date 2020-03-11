@@ -2,6 +2,9 @@
 This repository includes all data processing for the work "*Description and evolution of social actors involved in Twitter discussions: case study applied to FP Dual*".
 
 ## Authors
+* Domingo Barroso-Hurtado (<dobarroso@ugr.es>)
+* Wenceslao Arroyo-Machado (<wences@ugr.es>)
+* Daniel Torres-Salinas (<torressalinas@ugr.es>)
 
 ## Data
 Twitter data are available, but only includes User ID and Tweet ID, according to Twitter developer policy.
