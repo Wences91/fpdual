@@ -1,5 +1,5 @@
-# Description and evolution of social actors involved in Twitter discussions: case study applied to FP Dual
-This repository includes all data processing for the work "*Description and evolution of social actors involved in Twitter discussions: case study applied to FP Dual*".
+# Dual Vocational Education: Evolution of Actors’ Network in Twitter
+This repository includes all data processing for the work "*Dual Vocational Education: Evolution of Actors’ Network in Twitter*".
 
 ## Authors
 * Domingo Barroso-Hurtado (<dobarroso@ugr.es>)
