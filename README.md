@@ -1,5 +1,5 @@
 # Dual Vocational Education: Evolution of Actors’ Network in Twitter
-This repository includes all data processing for the work "*Dual Vocational Education: Evolution of Actors’ Network in Twitter*".
+This repository includes all data processing for the work "*Dual Vocational Education: Evolution of Actors’ Network in Twitter*", published in Educación XX1 ([10.5944/educxx1.28136](https://doi.org/10.5944/educxx1.28136)).
 
 ## Authors
 * Domingo Barroso-Hurtado (<dobarroso@ugr.es>)
